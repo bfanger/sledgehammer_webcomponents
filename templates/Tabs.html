@@ -1,0 +1,10 @@
+<ul class="Tabs">
+{foreach item=tab from=$tabs name=tabs}
+	<li{if $tab.selected} class="selected"{/if}>
+	<a href="{$tab.url|htmlentities}"{if $tab.selected} class="selected"{/if}>
+		{if $tab.icon}<img class="icon" src="/images/icons/{$tab.icon}" />{/if}{$tab.label}
+	</a>
+	</li>
+{/foreach}
+</ul>
+<br clear="all" />

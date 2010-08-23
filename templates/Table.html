@@ -1,0 +1,26 @@
+<table<?php echo value($table_parameters); ?>>
+	<thead>
+		<tr>
+<?php foreach ($columns as $column): ?>
+			<th<?php echo value($column_parameters[$column]); ?>><?php echo $headers[$column]; ?></th>
+<?php endforeach; ?>
+		</tr>
+	</thead>
+<?php if($footnote): ?>
+	<tfoot>
+		<tr>
+			<td colspan={$columns|@count}>{$footnote}</td>
+		</tr>
+	</tfoot>
+<?php endif; ?>
+	<tbody>
+<?php foreach ($rows as $row) {
+	echo "\t<tr>";
+	foreach ($columns as $column) {
+		echo '<td'.value($column_parameters[$column]).'>'.$row[$column].'</td>';
+	}
+	echo "</tr>\n";
+}
+?>
+	</tbody>
+</table>
