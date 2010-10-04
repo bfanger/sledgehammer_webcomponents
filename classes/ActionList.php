@@ -8,7 +8,7 @@
 class ActionList extends Object implements Component {
 
 	public
-		$actions; // formaat: array(url => label, ...) of array(url => array('icon' => icon, 'label' => label))
+		$actions; // formaat: array(url => label, ...) of array(url => array('icon' => icon_url, 'label' => label))
 
 	function __construct($actions) {
 		$this->actions = $actions;

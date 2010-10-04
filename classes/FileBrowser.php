@@ -9,7 +9,8 @@ class FileBrowser extends VirtualFolder {
 
 	private 
 		$path,
-		$options;
+		$options,
+                $extensionToIconMap; // De mapping tussen extenties en iconen
 
 	/**
 	 * @param string $path Het volledige pad
@@ -59,16 +60,16 @@ class FileBrowser extends VirtualFolder {
 				$folder_info = file_get_contents($path.'folderinfo.txt');
 			} elseif ($Entry->isDir()) {
 				$folders[$Entry->getFilename().'/'] = array(
-					'icon' => '../../webcomponents/images/icons/folder.png',
+					'icon' => WEBROOT.'webcomponents/icons/folder.png',
 					'label' => $Entry->getFilename()
 				);
 			} else {
 				$label = $Entry->getFilename();
 				if (empty($this->options['hide_filesize'])) {
-					$label .= '</a> ('.$this->format_filesize($Entry->getSize()).')<a href="#"';
+					$label .= '</a> ('.$this->formatFilesize($Entry->getSize()).')<a href="#"';
 				}
 				$files[rawurlencode($Entry->getFilename())] = array(
-					'icon' => '../../webcomponents/images/icons/'.$this->icon($Entry->getFilename()),
+					'icon' => $this->toIcon($Entry->getFilename()),
 					'label' => $label
 				);
 			}
@@ -135,20 +136,23 @@ class FileBrowser extends VirtualFolder {
 		return $fileBrowser->execute();
 	}
 
-	private function icon($filename) {
+	private function toIcon($filename) {
 		$extension = file_extension($filename);
-		$extension_to_icon = parse_ini_file(dirname(dirname(__FILE__)).'/settings/filebrowser_icons.ini');
-		if (isset($extension_to_icon[$extension])) {
-			return $extension_to_icon[$extension];
+                if ($this->extensionToIconMap === null) {
+                    $this->extensionToIconMap = parse_ini_file(dirname(dirname(__FILE__)).'/data/filebrowser_icons.ini');
+                }
+		$prefix = WEBROOT.'webcomponents/icons/';
+		if (isset($this->extensionToIconMap[$extension])) {
+			return $prefix.$this->extensionToIconMap[$extension];
 		} else {
-			return 'blank.png';
+			return $prefix.'blank.png';
 		}
 	}
 
 	/**
 	 * @param int $bytes
 	 */
-	private function format_filesize($bytes) {
+	private function formatFilesize($bytes) {
 		$sizes = array('K', 'M', 'G');
 		$size = $bytes;
 		foreach ($sizes as  $name) {

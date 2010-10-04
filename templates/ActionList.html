@@ -8,9 +8,9 @@
 foreach ($actions as $link) {
 	echo '<li><a href="'.$link['url'].'">';
 	if (isset($link['icon'])) {
-		echo '<img class="icon" src="'.WEBROOT.'images/icons/'.$link['icon'].'" />';
+		echo '<img class="icon" src="'.$link['icon'].'" />';
 	}
-	echo $link['label'].'</a></li>';
+	echo $link['label'].'</a></li>'."\n";
 
 
 }
