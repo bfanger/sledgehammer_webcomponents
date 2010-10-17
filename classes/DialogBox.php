@@ -20,7 +20,7 @@ class DialogBox extends Object implements Component {
 	function __construct($icon, $title, $question, $answers, $identifier = 'dialog_anwser') {
 		$this->identifier = $identifier;
 		if (in_array($icon, array('warning', 'error'))) {
-			$icon = WEBROOT.'mvc/images/MessageBox/'.$icon.'.png';
+			$icon = WEBROOT.'mvc/icons/MessageBox/'.$icon.'.png';
 		}
 		$this->icon = $icon;
 		$this->title = $title;
