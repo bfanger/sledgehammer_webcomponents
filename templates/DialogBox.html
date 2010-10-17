@@ -8,7 +8,7 @@
 foreach ($answers as $answer) {
 	echo '<li><button type="submit" name="'.$identifier.'" value="'.$answer['value'].'">';
 	if ($answer['icon']) {
-		echo '<img class="icon" src="'.WEBROOT.'images/icons/'.$answer['icon'].'" alt="'.$answer['label'].'" />';
+		echo '<img class="icon" src="'.$answer['icon'].'" alt="'.$answer['label'].'" />';
 	}
 	echo $answer['label'].'</button></li>';
 }

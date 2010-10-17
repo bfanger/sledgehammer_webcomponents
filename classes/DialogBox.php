@@ -17,12 +17,12 @@ class DialogBox extends Object implements Component {
 		$title,
 		$question;
 
-	function __construct($icon_filename, $title, $question, $answers, $identifier = 'dialog_anwser') {
+	function __construct($icon, $title, $question, $answers, $identifier = 'dialog_anwser') {
 		$this->identifier = $identifier;
-		if (!preg_match('/\.[^.]{2,4}$/', $icon_filename)) { // Ongeldige bestandsnaam? (geen extentie)
-			notice('Invalid filename icon_filename: "'.$icon_filename.'"');
+		if (in_array($icon, array('warning', 'error'))) {
+			$icon = WEBROOT.'mvc/images/MessageBox/'.$icon.'.png';
 		}
-		$this->icon = WEBROOT.'mvc/images/MessageBox/'.$icon_filename;
+		$this->icon = $icon;
 		$this->title = $title;
 		$this->question = $question;
 		$this->answers = $answers;
@@ -72,6 +72,7 @@ class DialogBox extends Object implements Component {
 		$template->render();
 	}
 
+	/*
 	// Een Dialoog opbouwen met veel voorkomende opties.
 	// $types: 'delete', 'warning', 
 	static function build($type, $question = NULL, $title = NULL) {
@@ -104,5 +105,6 @@ class DialogBox extends Object implements Component {
 		}
 		return new DialogBox($icon, $title, $question, $answers);
 	}
+	 */
 }
 ?>
