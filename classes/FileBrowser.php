@@ -42,8 +42,7 @@ class FileBrowser extends VirtualFolder {
 	function index() {
 		if (!file_exists($this->path)) {
 			notice('DataFolder: "'.$this->path.'" not found');
-			$command = new HttpError(404);
-			return $command->execute();
+			return new HttpError(404);
 		}
 		$Dir =  new DirectoryIterator($this->path);
 		$folders = array();
@@ -97,14 +96,12 @@ class FileBrowser extends VirtualFolder {
 		}
 		$extension = file_extension($filename);
 		if ($extension != 'php') {
-			render_file($this->path.$filename);
-			exit();
+			return new FileDocument($this->path.$filename);
 		}
 		switch (value($this->options['php_files'])) {
 
 			case 'plain':
-				render_file($this->path.$filename);
-				exit;
+				return new FileDocument($this->path.$filename);
 
 			case 'highlight': 
 				$html = highlight_file($this->path.$filename, true);
@@ -121,9 +118,7 @@ class FileBrowser extends VirtualFolder {
 				exit;
 
 			default:
-				$command = new HttpError(403);
-				return $command->execute();
-				break;
+				return new HttpError(403);
 		}
 	}
 
@@ -133,7 +128,7 @@ class FileBrowser extends VirtualFolder {
 			getDocument('');
 		}
 		$fileBrowser = new FileBrowser($this->path.$folder.'/', $this->options);
-		return $fileBrowser->execute();
+		return $fileBrowser->generateContent();
 	}
 
 	private function toIcon($filename) {
