@@ -46,6 +46,12 @@ class DialogBox extends Object implements Component {
 		}
 	}
 
+	function getHeaders() {
+		return array(
+			'title' => $this->title
+		);
+	}
+
 	function render() {
 		foreach($this->answers as $answer => $button) {
 			if (is_array($button)) { // button met icoon?

@@ -87,6 +87,8 @@ class FileBrowser extends VirtualFolder {
 			'folder_info' => $folder_info,
 			'folders' => new ActionList($folders),
 			'files' => new ActionList($files),
+		), array(
+			'title' => basename($visible_path).'/',
 		));
 	}
 
