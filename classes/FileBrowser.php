@@ -78,7 +78,7 @@ class FileBrowser extends VirtualFolder {
 		} elseif (value($this->options['show_fullpath'])) {
 			$visible_path = $this->path;
 		} else {
-			$visible_path = substr($path, strlen($this->path));
+			$visible_path = basename($this->path);
 		}
 		ksort($folders);
 		ksort($files);
