@@ -6,7 +6,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class Breadcrumbs extends Object implements Component {
 
 	private $identfier; // De idenfier die bepaalt welke crumbs bij dit component horen 

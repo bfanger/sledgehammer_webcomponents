@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class Table extends Object implements Component {
 
 	public

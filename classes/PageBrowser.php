@@ -5,7 +5,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class PageBrowser extends Object implements Component {
 
 	public

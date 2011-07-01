@@ -5,7 +5,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class OmnitureTracker extends Object implements Component {
 
 	public 

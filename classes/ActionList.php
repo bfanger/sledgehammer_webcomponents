@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class ActionList extends Object implements Component {
 
 	public

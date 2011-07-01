@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class FileBrowser extends VirtualFolder {
 
 	private 

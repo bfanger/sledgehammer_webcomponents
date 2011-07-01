@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class DefinitionList extends Object implements Component {
 
 	public

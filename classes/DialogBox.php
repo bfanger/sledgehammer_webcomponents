@@ -5,7 +5,7 @@
  * Compatible met de Import interface uit de Forms module 
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class DialogBox extends Object implements Component {
 
 	public 

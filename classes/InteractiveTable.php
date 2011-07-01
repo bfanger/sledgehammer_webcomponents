@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class InteractiveTable extends Table {
 
 	public 

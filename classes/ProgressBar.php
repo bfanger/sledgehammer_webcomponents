@@ -4,7 +4,7 @@
  *
  * @package Webcomponents
  */
-
+namespace SledgeHammer;
 class ProgressBar extends Object implements Component {
 
 	public 
