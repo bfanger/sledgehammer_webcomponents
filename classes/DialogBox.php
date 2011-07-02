@@ -71,46 +71,11 @@ class DialogBox extends Object implements Component {
 			'title' => $this->title,
 			'icon' => $this->icon,
 			'question' => $this->question,
-			'form_action' => URL::uri(),
+			'form_action' => URL::getCurrentURL(),
 			'identifier' => $this->identifier,
 			'answers' => $answers,
 		));
 		$template->render();
 	}
-
-	/*
-	// Een Dialoog opbouwen met veel voorkomende opties.
-	// $types: 'delete', 'warning', 
-	static function build($type, $question = NULL, $title = NULL) {
-
-		$icon = strtolower($type).'.gif'; // De afbeeldingen hebben vaak dezelfde naam als het type
-
-		switch ($type) { // Op basis van het type 
-
-			case 'delete':
-				$default_title = 'Verwijder bevestiging';
-				$default_question = 'Weet je zeker dat je het item wilt verwijderen?';
-				$answers = array('yes' => array('icon' => 'ok.gif', 'label' => 'Ja'), 'no.gif' => array('icon' => 'cancel', 'label' => 'Nee'));
-				break;
-
-			case 'warning':
-				$default_title = 'Waarschuwing';
-				$default_question = 'Weet je zeker dat je wilt doorgaan?';
-				$answers = array('continue' => array('icon' => 'continue.gif', 'label' => 'Doorgaan'), 'cancel' => array('icon' => 'cancel.gif', 'label' => 'Annuleren'));
-				break;
-
-			default:
-  			warning('Unexcpected dialog-type: "'.$type.'", expecting "delete" or "warning"');
-				return false;
-		}
-		if($title === NULL) { 
-			$title	= $default_title; 
-		}
-		if($question === NULL) { 
-			$question	= $default_question; 
-		}
-		return new DialogBox($icon, $title, $question, $answers);
-	}
-	 */
 }
 ?>

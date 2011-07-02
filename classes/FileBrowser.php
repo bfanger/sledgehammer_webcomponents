@@ -44,7 +44,7 @@ class FileBrowser extends VirtualFolder {
 			notice('DataFolder: "'.$this->path.'" not found');
 			return new HttpError(404);
 		}
-		$Dir =  new DirectoryIterator($this->path);
+		$Dir =  new \DirectoryIterator($this->path);
 		$folders = array();
 		$files = array();
 		$folder_info = false;
