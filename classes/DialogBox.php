@@ -1,14 +1,14 @@
 <?php
 /**
- * Een component waarmee je een vraag kunt stellen, en antwoord krijgt ;) 
+ * Een component waarmee je een vraag kunt stellen, en antwoord krijgt ;)
  *
- * Compatible met de Import interface uit de Forms module 
+ * Compatible met de Import interface uit de Forms module
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class DialogBox extends Object implements Component {
+class DialogBox extends Object implements View {
 
-	public 
+	public
 		$identifier,
 		$answers;
 

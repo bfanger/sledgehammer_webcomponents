@@ -5,17 +5,17 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class Table extends Object implements Component {
+class Table extends Object implements View {
 
 	public
 		$template = 'Table.html',
-		$headers = array(), // De vertalingen van de kolomnamen. Bij geen vertaling wordt de kolomnaam gebruikt. array('kolomnaam' => 'vertaling'); 
+		$headers = array(), // De vertalingen van de kolomnamen. Bij geen vertaling wordt de kolomnaam gebruikt. array('kolomnaam' => 'vertaling');
 		$Iterator, // De inhoud van de tabel
 		$footnote; // Een voetnoot aan het einde van de tabel
-		
 
-	protected		
-		$columns, 
+
+	protected
+		$columns,
 		$table_parameters,
 		$column_parameters;
 
@@ -46,7 +46,7 @@ class Table extends Object implements Component {
 		));
 		$template->render();
 	}
-	
+
 	protected function export_table_headers() {
 		$headers = array();
 		foreach ($this->columns as $column) {

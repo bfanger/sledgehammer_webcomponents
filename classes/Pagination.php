@@ -1,12 +1,12 @@
 <?php
 /**
  * Pagination:  * << 1 2 3 [4] 5 6 10-20 >>
- * Oftewel de balk die onderaan de (zoek)resultaten staat om door de resultaten te bladeren  
+ * Oftewel de balk die onderaan de (zoek)resultaten staat om door de resultaten te bladeren
  *
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class Pagination extends Object implements Component {
+class Pagination extends Object implements View {
 
 	public
 		$page_count,
@@ -35,12 +35,12 @@ class Pagination extends Object implements Component {
 		$end = $this->page_count;
 		$prefix = htmlentities($this->url_prefix);
 		$suffix = htmlentities($this->url_suffix);
-		if ($this->page_count > (($this->offset * 2) + 1)) { // Past het aantal pagina's dermate groot dat het niet mooi meer op de pagina past? 
+		if ($this->page_count > (($this->offset * 2) + 1)) { // Past het aantal pagina's dermate groot dat het niet mooi meer op de pagina past?
 			$offset_left = $this->offset;
 			$offset_right = $this->offset;
 			if ($this->current_page <= $this->offset) { // is de offset niet nodig aan de linkerkant?
 				$offset_right = ($this->offset * 2) - $this->current_page + 1; // dan de rechterkant aanvullen
-			} 
+			}
 			if (($this->current_page + $offset_right) >= $this->page_count) { // is de offset niet nodig aan de rechterkant?
 				$offset_left = ($this->offset * 2) + ($this->current_page - $this->page_count);//($this->offset * 2) + $this->current_page + 1; // dan de rechterkant aanvullen
 			}
