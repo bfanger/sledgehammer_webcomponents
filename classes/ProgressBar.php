@@ -5,13 +5,13 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class ProgressBar extends Object implements Component {
+class ProgressBar extends Object implements View {
 
-	public 
+	public
 		$value,
 		$width = 300;
 
-	private 
+	private
 		$maximum,
 		$minimum;
 
@@ -20,7 +20,7 @@ class ProgressBar extends Object implements Component {
 		$this->value = $value;
 		$this->minimum = $minimum;
 	}
-  
+
 	function render() {
 		$factor = ($this->value - $this->minimum) / ($this->maximum - $this->minimum);
 		$GLOBALS['Smarty']->assign(array(

@@ -6,9 +6,9 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class OmnitureTracker extends Object implements Component {
+class OmnitureTracker extends Object implements View {
 
-	public 
+	public
 		$pageName, // [NULL|string] De pagina titel bij omniture geregistreerd wordt. Wordt automatisch ingesteld op $Document->title, tenzij hij hetzelfde is als de $default_title
 		$products = array(); // array('product1' => array('property1','property2'))
 
@@ -30,7 +30,7 @@ class OmnitureTracker extends Object implements Component {
 		}
 	}
 
-	// Werkt net als de Smarty->assign() 
+	// Werkt net als de Smarty->assign()
 	// $name_or_array: naam van de variabele of een assoc array
 	// $value: waarde van de variabele
 	function assign($name_or_array, $value = NULL) {

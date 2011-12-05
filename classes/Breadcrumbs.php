@@ -1,15 +1,15 @@
 <?php
 /**
  * Breadcrumb Navigation
- * D.m.v. van static add() function kun je crumbs toevoegen. Hierdoor kan het component vanuit alle php bestanden gevuld worden. 
+ * D.m.v. van static add() function kun je crumbs toevoegen. Hierdoor kan het component vanuit alle php bestanden gevuld worden.
  * Zelfs als de Breadcrumbs nergens getoond zal worden kunnen Commands & VirtualFolder gebruik maken van deze class.
  *
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class Breadcrumbs extends Object implements Component {
+class Breadcrumbs extends Object implements View {
 
-	private $identfier; // De idenfier die bepaalt welke crumbs bij dit component horen 
+	private $identfier; // De idenfier die bepaalt welke crumbs bij dit component horen
 	private static $crumbs = array(); // format: array('identfier' => array('url' => url, 'label' => label))
 	static $active = 'default'; // De Breadcrumb::add() voegt de crumb toe aan deze identfier
 

@@ -5,7 +5,7 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class ActionList extends Object implements Component {
+class ActionList extends Object implements View {
 
 	public
 		$actions; // formaat: array(url => label, ...) of array(url => array('icon' => icon_url, 'label' => label))

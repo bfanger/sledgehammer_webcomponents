@@ -5,7 +5,7 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class DefinitionList extends Object implements Component {
+class DefinitionList extends Object implements View {
 
 	public
 		$items,

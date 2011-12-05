@@ -5,7 +5,7 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class OverviewController extends Object implements Command {
+class OverviewController extends Object implements Controller {
 
 	public
 		$Table;
