@@ -1,12 +1,12 @@
 <?php
 /**
- * << 1 2 3 [4] 5 6 10-20 >>
+ * Pagination:  * << 1 2 3 [4] 5 6 10-20 >>
  * Oftewel de balk die onderaan de (zoek)resultaten staat om door de resultaten te bladeren  
  *
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class PageBrowser extends Object implements Component {
+class Pagination extends Object implements Component {
 
 	public
 		$page_count,
@@ -63,7 +63,7 @@ class PageBrowser extends Object implements Component {
 				);
 			}
 		}
-		$template = new Template('PageBrowser.html', array(
+		$template = new Template('Paginate.html', array(
 			'first' => ($this->current_page != 1) ? $prefix.'1'.$suffix : false,
 			'previous' => ($this->current_page != 1) ? $prefix.($this->current_page - 1).$suffix : false,
 			'pages' => $pages,
