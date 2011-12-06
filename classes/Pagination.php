@@ -63,7 +63,7 @@ class Pagination extends Object implements View {
 				);
 			}
 		}
-		$template = new Template('Paginate.html', array(
+		$template = new Template('Pagination.html', array(
 			'first' => ($this->current_page != 1) ? $prefix.'1'.$suffix : false,
 			'previous' => ($this->current_page != 1) ? $prefix.($this->current_page - 1).$suffix : false,
 			'pages' => $pages,
