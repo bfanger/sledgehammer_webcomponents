@@ -67,7 +67,7 @@ class DialogBox extends Object implements View {
 				);
 			}
 		}
-		$template = new Template('DialogBox.html', array(
+		$template = new Template('DialogBox.php', array(
 			'title' => $this->title,
 			'icon' => $this->icon,
 			'question' => $this->question,

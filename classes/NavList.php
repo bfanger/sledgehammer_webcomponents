@@ -5,17 +5,22 @@
  * @package Webcomponents
  */
 namespace SledgeHammer;
-class ActionList extends Object implements View {
+class NavList extends Object implements View {
 
 	public
+		$title,
 		$actions; // formaat: array(url => label, ...) of array(url => array('icon' => icon_url, 'label' => label))
 
-	function __construct($actions) {
+	function __construct($actions, $title = null) {
 		$this->actions = $actions;
+		$this->title = $title;
 	}
 
 	function render() {
 		$actions = array();
+		if ($this->title !== null) {
+			$actions[]['header'] = $this->title;
+		}
 		foreach($this->actions as $url => $action) {
 			if (is_array($action)) { // link met icoon?
 				$actions[] = array(
@@ -30,7 +35,7 @@ class ActionList extends Object implements View {
 				);
 			}
 		}
-		$template = new Template('ActionList.html', array('actions' => $actions));
+		$template = new Template('NavList.php', array('actions' => $actions));
 		$template->render();
 	}
 }

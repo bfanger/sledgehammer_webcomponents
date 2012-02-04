@@ -7,7 +7,7 @@
 namespace SledgeHammer;
 class FileBrowser extends VirtualFolder {
 
-	private 
+	private
 		$path,
 		$options,
                 $extensionToIconMap; // De mapping tussen extenties en iconen
@@ -21,7 +21,7 @@ class FileBrowser extends VirtualFolder {
 	 *   (bool) hide_header        Verberg de header waar het path in getoond wordt
 	 *   (enum) document_title     Verander de $Document->title in: 'subfolder', 'path'
 	 *   (enum) php_files          Opties 'include', 'show_source', false(403 forbidden)
-	 */ 
+	 */
 	function __construct($path, $options = array()) {
 		parent::__construct();
 		$this->handle_filenames_without_extension = true;
@@ -83,10 +83,10 @@ class FileBrowser extends VirtualFolder {
 		ksort($folders);
 		ksort($files);
 		return new Template('FileBrowser.html', array(
-			'path' => $visible_path, 
+			'path' => $visible_path,
 			'folder_info' => $folder_info,
-			'folders' => new ActionList($folders),
-			'files' => new ActionList($files),
+			'folders' => new NavList($folders),
+			'files' => new NavList($files),
 		), array(
 			'title' => basename($visible_path).'/',
 		));
@@ -105,7 +105,7 @@ class FileBrowser extends VirtualFolder {
 			case 'plain':
 				return new FileDocument($this->path.$filename);
 
-			case 'highlight': 
+			case 'highlight':
 				$html = highlight_file($this->path.$filename, true);
 				$document = new Document;
 				$document->component = new HTML($html);

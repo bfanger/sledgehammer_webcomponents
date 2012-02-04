@@ -33,7 +33,7 @@ class Breadcrumbs extends Object implements View {
 				$breadcrumbs[] = $crumb['label'];
 			}
 		}
-		$template = new Template('Breadcrumbs.html', array('breadcrumbs' => $breadcrumbs));
+		$template = new Template('Breadcrumbs.php', array('breadcrumbs' => $breadcrumbs));
 		$template->render();
 	}
 }
