@@ -9,31 +9,36 @@
 namespace SledgeHammer;
 class Breadcrumbs extends Object implements View {
 
+	private $divider;
 	private $identfier; // De idenfier die bepaalt welke crumbs bij dit component horen
 	private static $crumbs = array(); // format: array('identfier' => array('url' => url, 'label' => label))
 	static $active = 'default'; // De Breadcrumb::add() voegt de crumb toe aan deze identfier
 
-	function __construct($identfier = 'default') {
+	function __construct($identfier = 'default', $divider = '&raquo') {
 		$this->identfier = $identfier;
+		$this->divider = $divider;
 	}
 
-	static function add($label, $url = NULL) {
-		self::$crumbs[self::$active][] = array('url' => $url, 'label' => $label);
+	/**
+	 *
+	 * @param string|array $crumb
+	 * @param string $url
+	 */
+	static function add($crumb, $url = null) {
+		if (is_array($crumb) == false) {
+			$crumb = array(
+				'label' => $crumb,
+			);
+		}
+		$crumb['url'] = $url;
+		self::$crumbs[self::$active][] = $crumb;
 	}
 
 	function render() {
-		$breadcrumbs = array();
 		if (!isset(self::$crumbs[self::$active])) {
 			self::$crumbs[self::$active] = array();
 		}
-		foreach (self::$crumbs[$this->identfier] as $crumb) {
-			if ($crumb['url']) {
-				$breadcrumbs[] = '<a href="'.htmlentities($crumb['url']).'">'.$crumb['label'].'</a>';
-			} else {
-				$breadcrumbs[] = $crumb['label'];
-			}
-		}
-		$template = new Template('Breadcrumbs.php', array('breadcrumbs' => $breadcrumbs));
+		$template = new Template('Breadcrumbs.php', array('breadcrumbs' => self::$crumbs[$this->identfier], 'divider' => $this->divider));
 		$template->render();
 	}
 }
