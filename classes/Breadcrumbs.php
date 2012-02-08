@@ -6,7 +6,9 @@
  *
  * @package Webcomponents
  */
+
 namespace SledgeHammer;
+
 class Breadcrumbs extends Object implements View {
 
 	private $divider;
@@ -38,8 +40,29 @@ class Breadcrumbs extends Object implements View {
 		if (!isset(self::$crumbs[self::$active])) {
 			self::$crumbs[self::$active] = array();
 		}
-		$template = new Template('Breadcrumbs.php', array('breadcrumbs' => self::$crumbs[$this->identfier], 'divider' => $this->divider));
-		$template->render();
+		$breadcrumbs = self::$crumbs[$this->identfier];
+		echo "<ul class=\"breadcrumb\">\n";
+		$breadcrumbs[count($breadcrumbs) - 1]['last'] = true;
+		foreach ($breadcrumbs as $crumb) {
+			echo "\t<li>";
+			if (isset($crumb['icon'])) {
+				$label = HTML::icon($crumb['icon']).' '.HTML::escape($crumb['label']);
+			} else {
+				$label = HTML::escape($crumb['label']);
+			}
+			if ($crumb['url']) {
+				echo HTML::element('a', array('href' => $crumb['url']), $label);
+			} else {
+				echo $label;
+			}
+			if (empty($crumb['last'])) {
+				echo ' <span class="divider">'.$this->divider.'</span>';
+			}
+			echo "</li>\n";
+		}
+		echo "</ul>\n";
 	}
+
 }
+
 ?>

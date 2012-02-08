@@ -1,77 +1,101 @@
 <?php
 /**
- * Pagination:  * << 1 2 3 [4] 5 6 10-20 >>
- * Oftewel de balk die onderaan de (zoek)resultaten staat om door de resultaten te bladeren
+ * Pagination: << 1 2 3 [4] 5 6 7 8 9 10 ... 42 >>
  *
  * @package Webcomponents
  */
 namespace SledgeHammer;
 class Pagination extends Object implements View {
 
-	public
-		$page_count,
-		$current_page,
-		$url_prefix,
-		$url_suffix,
-		$offset = 10; // het aantal pagina's dat getoont wordt naast de geselecteerde pagina
+	/**
+	 * @var int $count Number of pages
+	 */
+	private	$count;
+	/**
+	 * @var int $active The current page
+	 */
+	private	$current;
 
-	function __construct($page_count, $current_page, $url_prefix = NULL, $url_suffix = NULL) {
-		$this->page_count = ceil($page_count);
-		$this->current_page = $current_page;
-		if ($url_prefix) {
-			$this->url_prefix = $url_prefix;
-		} else {
-			$this->url_prefix = URL::info('path').'?'.http_build_query(URL::parameters('page='));
+	// Options
+
+	private $parameter = 'page';
+	private $max = 11;
+	/**
+	 * @var string
+	 */
+	private $href;
+
+	/**
+	 *
+	 * @param int $count     Number of pages
+	 * @param int $current    Current page
+	 * @param array $options [optional]
+	 */
+	function __construct($count, $current = 1, $options = array()) {
+		$this->count = $count;
+		$this->current = $current;
+		foreach ($options as $key => $value) {
+			$this->$key = $value;
 		}
-		$this->url_suffix = $url_suffix;
+		if ($this->href === null) {
+			$url = URL::getCurrentURL();
+			unset($url->query[$this->parameter]);
+			$url->query[$this->parameter] = '';
+			$this->href = (string) $url;
+		}
 	}
 
 	function render() {
-		if ($this->page_count == 0) {
+		if ($this->count == 0) { // No pages, no pagination
 			return;
 		}
-		$pages = array();
 		$start = 1;
-		$end = $this->page_count;
-		$prefix = htmlentities($this->url_prefix);
-		$suffix = htmlentities($this->url_suffix);
-		if ($this->page_count > (($this->offset * 2) + 1)) { // Past het aantal pagina's dermate groot dat het niet mooi meer op de pagina past?
-			$offset_left = $this->offset;
-			$offset_right = $this->offset;
-			if ($this->current_page <= $this->offset) { // is de offset niet nodig aan de linkerkant?
-				$offset_right = ($this->offset * 2) - $this->current_page + 1; // dan de rechterkant aanvullen
-			}
-			if (($this->current_page + $offset_right) >= $this->page_count) { // is de offset niet nodig aan de rechterkant?
-				$offset_left = ($this->offset * 2) + ($this->current_page - $this->page_count);//($this->offset * 2) + $this->current_page + 1; // dan de rechterkant aanvullen
-			}
-			if ($this->current_page > $offset_left) {
-				$start = $this->current_page - $offset_left;
-			}
-			if (($this->current_page + $offset_right) < $this->page_count) {
-				$end = $this->current_page + $offset_right;
-			}
+		$end = $this->count;
+		$pages = array();
+		echo "<div class=\"pagination\"><ul>\n";
+		// previous
+		if ($this->current != 1) {
+			echo "\t<li>", HTML::element('a', array('href' => $this->href.($this->current - 1)), '&laquo;'), "</li>\n";
 		}
-		for ($i = $start; $i <= $end; $i++) {
-			if ($i == $this->current_page) {
-				$pages[$i] = array(
-					'selected' => true,
-				);
+		if ($this->count > $this->max) {
+			$offset = floor($this->max / 2);
+			if ($this->current < $offset + 2) {
+				$end = $this->max - 1;
 			} else {
-				$pages[$i] = array(
-					'selected' => false,
-					'url' => $prefix.$i.$suffix
-				);
+				if ($this->current + $offset > $this->count) {
+					$start = $this->count - $this->max;
+				} else {
+					$start = $this->current - $offset;
+				}
+				$end = $this->current + $offset;
+				if ($end > $this->count) {
+					$end = $this->count;
+				}
+
 			}
 		}
-		$template = new Template('Paginate.html', array(
-			'first' => ($this->current_page != 1) ? $prefix.'1'.$suffix : false,
-			'previous' => ($this->current_page != 1) ? $prefix.($this->current_page - 1).$suffix : false,
-			'pages' => $pages,
-			'next' => ($this->current_page != $this->page_count) ? $prefix.($this->current_page + 1).$suffix : false,
-			'last' => ($this->current_page != $this->page_count) ? $prefix.$this->page_count.$suffix : false,
-			'count' => $this->page_count
-		));
-		$template->render();
+		// numbers
+		for ($i = $start; $i <= $end; $i++) {
+			$attributes = ($i == $this->current) ? array('class' => 'active') : array();
+			echo "\t", HTML::element('li', $attributes, HTML::element('a', array('href' => $this->href.$i), $i)), "\n";
+
+		}
+		// total pages indication
+		if ($end != $this->count) {
+			if ($end != ($this->count - 1)) {
+				$nextDecimal = (floor($this->current / 10) * 10) + 10;
+				if ($nextDecimal > $this->count) {
+					$nextDecimal = $this->count;
+				}
+				echo "\t<li>", HTML::element('a', array('href' => $this->href.$nextDecimal), '...'), "</li>\n"; // @todo jump to page
+			}
+			echo "\t<li>", HTML::element('a', array('href' => $this->href.($this->count)), $this->count), "</li>\n";
+		}
+		// next
+		if ($this->current != $this->count) {
+			echo "\t<li>", HTML::element('a', array('href' => $this->href.($this->current + 1)), '&raquo;'), "</li>\n";
+		}
+		echo "</ul></div>";
 	}
 }
 ?>

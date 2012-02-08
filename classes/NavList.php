@@ -4,38 +4,41 @@
  *
  * @package Webcomponents
  */
+
 namespace SledgeHammer;
+
 class NavList extends Object implements View {
 
-	public
-		$actions; // format: array(url => label, ...) of array(url => array('icon' => icon_url, 'label' => label))
+	/**
+	 * @var array
+	 */
+	private $items;
 
-	function __construct($actions) {
-		$this->actions = $actions;
+	/**
+	 * @param array $items format: array(url => label, ...) of array(url => array('icon' => icon_url, 'label' => label))
+	 */
+	function __construct($items) {
+		$this->items = $items;
 	}
 
 	function render() {
-		$actions = array();
-		foreach($this->actions as $url => $action) {
+		echo "<ul class=\"nav nav-list\">\n";
+		foreach ($this->items as $url => $action) {
 			if (is_int($url)) {
-				$actions[] = array(
-					'header' => $action,
-				);
-			} elseif (is_array($action)) { // link met icoon?
-				$actions[] = array(
-					'url' => $url,
-					'icon' => $action['icon'],
-					'label' => $action['label'],
-				);
-			} else { // link zonder icoon
-				$actions[] = array(
-					'url' => $url,
-					'label' => $action,
-				);
+				echo "\t<li class=\"nav-header\">".HTML::escape($action)."</li>\n";
+			} else {
+				echo "\t<li><a href=\"".$url.'">';
+				if (is_array($action)) { // link met icoon?
+					echo HTML::icon($action['icon']), ' ', HTML::escape($action['label']);
+				} else { // link zonder icoon
+					echo HTML::escape($action);
+				}
+				echo "</a></li>\n";
 			}
 		}
-		$template = new Template('NavList.php', array('actions' => $actions));
-		$template->render();
+		echo '</ul>';
 	}
+
 }
+
 ?>
