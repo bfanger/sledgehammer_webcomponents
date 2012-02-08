@@ -24,6 +24,10 @@ class Pagination extends Object implements View {
 	 * @var string
 	 */
 	private $href;
+	/**
+	 * @var string Alignent "left", "center", "right"
+	 */
+	private $align = 'left';
 
 	/**
 	 *
@@ -52,7 +56,11 @@ class Pagination extends Object implements View {
 		$start = 1;
 		$end = $this->count;
 		$pages = array();
-		echo "<div class=\"pagination\"><ul>\n";
+		$class = 'pagination';
+		if ($this->align != 'left') {
+			$class .= ' pagination-'.$this->align;
+		}
+		echo "<div class=\"".$class."\"><ul>\n";
 		// previous
 		if ($this->current != 1) {
 			echo "\t<li>", HTML::element('a', array('href' => $this->href.($this->current - 1)), '&laquo;'), "</li>\n";
