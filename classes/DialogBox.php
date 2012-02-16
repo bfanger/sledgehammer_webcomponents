@@ -36,18 +36,16 @@ class DialogBox extends Object implements View {
 		throw new \Exception('DialogBox doesn\'t support a default option');
 	}
 
-	function import(&$error_message, $source = NULL) {
-		if (extract_element($_POST, $this->identifier, $answer)) {
-
-		} else {
-			$error_message = false; // De foutmelding onderdrukken, hoogstwaarschijnlijk is het dialoog venster nog niet getoond.
-			return NULL;
+	function import(&$error_message, $source = null) {
+		if (extract_element($_POST, $this->identifier, $answer) == false) {
+			$error_message = false;
+			return null;
 		}
 		if (isset($this->choices[$answer])) {
 			return $answer;
 		} else {
 			$error_message = 'Unexpected anwser "'.$answer.'", expecting "'.implode(', ', array_keys($this->choices)).'"';
-			return NULL;
+			return null;
 		}
 	}
 
@@ -63,22 +61,15 @@ class DialogBox extends Object implements View {
 		echo '<h3>', HTML::escape($this->title), "</h3></div>\n";
 		echo "\t<div class=\"modal-body\">\n\t\t", $this->body, "\n\t</div>\n";
 		echo "\t<div class=\"modal-footer\"><form action=\"".URL::getCurrentURL()."\" method=\"".$this->method."\">\n";
-		foreach ($this->choices as $answer => $choice) {
-			$attributes = array(
-				'type' => 'submit',
-				'class' => 'btn',
-				'name' => $this->identifier,
-				'value' => $answer
-			);
-			if (is_array($choice)) {
-				$label = HTML::escape($choice['label']);
-				if ($choice['icon']) {
-					$label = HTML::icon($choice['icon']).' '.$label;
-				}
-			} else {
-				$label = HTML::escape($choice);
+		foreach (array_reverse($this->choices) as $answer => $choice) {
+			if (is_array($choice) === false) {
+				$choice = array('label' => $choice);
 			}
-			echo "\t\t", HTML::element('button', $attributes, $label), "\n";
+			$choice['type'] = 'submit';
+			$choice['name'] = $this->identifier;
+			$choice['value'] = $answer;
+			$button = new Button($choice);
+			echo "\t\t", $button, "\n";
 		}
 		echo "\t</form></div>\n";
 		echo '</div>';
