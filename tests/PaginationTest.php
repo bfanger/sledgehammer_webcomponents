@@ -3,7 +3,7 @@ namespace SledgeHammer;
 /**
  * PaginationTests
  */
-class PaginationTests extends TestCase {
+class PaginationTest extends TestCase {
 
 	function test_pagination() {
 		$pager = new Pagination(2, 1, array('href' => '#page'));
