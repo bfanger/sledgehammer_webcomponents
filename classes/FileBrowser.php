@@ -65,7 +65,7 @@ class FileBrowser extends VirtualFolder {
 			} else {
 				$label = $Entry->getFilename();
 				if (empty($this->options['hide_filesize'])) {
-					$label .= '</a> ('.$this->formatFilesize($Entry->getSize()).')<a href="#"';
+					$label .= ' ('.$this->formatFilesize($Entry->getSize()).')';
 				}
 				$files[rawurlencode($Entry->getFilename())] = array(
 					'icon' => $this->toIcon($Entry->getFilename()),
